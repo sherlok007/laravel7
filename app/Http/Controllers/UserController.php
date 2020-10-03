@@ -18,8 +18,12 @@ class UserController extends Controller
         //$userid = Auth::id();
         if ($request->hasFile('avatarImg')) {
             User::uploadAvatar($request->avatarImg);
+            //$request->session()->flash('success', 'Image uploaded successfully');
+            return redirect()->back()->with('success', 'Image uploaded successfully');
+        } else {
+            //$request->session()->flash('error', 'Image upload failed!');
+            return redirect()->back()->with('error', 'Image upload failed!');
         }
-        return redirect()->back();
     }
 
 }

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -20,6 +19,7 @@
                 </div>
 
                 <div class="card-body">
+                    <x-alert />
                     <form action="{{ url('/upload') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="avatarImg" />
