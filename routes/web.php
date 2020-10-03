@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/upload', 'UserController@uploadAvatar');
+
+Auth::routes();
+
+Route::get('/user', 'UserController@index');
+Route::get('/home', 'HomeController@index')->name('home');
