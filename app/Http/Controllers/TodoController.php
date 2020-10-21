@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoCreateRequest;
 use App\Todo;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
@@ -26,5 +27,14 @@ class TodoController extends Controller
     public function store(TodoCreateRequest $request) {
         Todo::create($request->all());
         return redirect()->back()->with('success', 'Todo created successfully');
+    }
+
+    // Below function is known as route model binding
+    public function update(TodoCreateRequest $request, Todo $id) {
+        $id->update([
+            'title'=>$request->title,
+        ]);
+        return redirect(route('todo.index'))->with('success', 'Updated successfully');
+
     }
 }
