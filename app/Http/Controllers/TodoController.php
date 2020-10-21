@@ -25,14 +25,25 @@ class TodoController extends Controller
     }
 
     public function store(TodoCreateRequest $request) {
-        Todo::create($request->all());
-        return redirect()->back()->with('success', 'Todo created successfully');
+        //Todo::create($request->all());
+        $input = $request->all();
+        $input['buyer_name'] = ucwords($request['buyer_name']);
+        $input['buyer_address'] = ucfirst($request['buyer_address']);
+        Todo::create($input);
+        //return redirect()->back()->with('success', 'Todo created successfully');
+        return redirect(route('todo.index'))->with('success', 'Updated successfully');
     }
 
     // Below function is known as route model binding
     public function update(TodoCreateRequest $request, Todo $id) {
         $id->update([
-            'title'=>$request->title,
+            'order_no'=>$request->order_no,
+            'buyer_name'=>ucwords($request->buyer_name),
+            'buyer_phone'=>$request->buyer_phone,
+            'buyer_address'=>ucwords($request->buyer_address),
+            'consign_no'=>$request->consign_no,
+            'order_date'=>$request->order_date,
+            'refund_applied'=> isset($request->refund_applied) ? 1 : 0,
         ]);
         return redirect(route('todo.index'))->with('success', 'Updated successfully');
 

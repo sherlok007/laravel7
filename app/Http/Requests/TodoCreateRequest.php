@@ -24,15 +24,20 @@ class TodoCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
+            'buyer_name' => 'required',
+            'consign_no' => 'required|max:15',
+            'order_no' => 'required',
+            'order_date' => 'date_format:Y-m-d',
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Please enter a title',
-            'title.max' => 'The title should not exceed 255 chars',
+            'buyer_name.required' => 'Please enter the buyer name',
+            'consign_no.required' => 'Please enter the consignment number',
+            'order_no.required' => 'Please enter the order number',
+            'consign_no.max' => 'The title should not exceed 255 chars',
         ];
     }
 }

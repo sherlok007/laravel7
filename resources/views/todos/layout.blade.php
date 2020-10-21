@@ -10,17 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 </head>
 <body>
-<div class="container" style="margin-top: 20px;">
-    <div class="row">
-        <div class="col">
-            @yield('content')
-        </div>
-        <div class="col-md-auto">
-        </div>
-        <div class="col col-lg-2">
-        </div>
-    </div>
+<div class="container">
+    @yield('content')
 
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">© 2017-2018 Company Name</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
 </div>
 </body>
 </html>
