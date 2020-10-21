@@ -1,2 +1,5 @@
-<?php
-    echo '<h1>Edit Todos</h1>';
+@extends('todos.layout')
+
+@section('content')
+
+@endsection
