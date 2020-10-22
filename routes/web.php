@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/todos', 'TodoController@index')->name('todo.index');
+Route::post('/todos/importexcel', 'TodoController@importexcel');
 Route::get('/todos/create', 'TodoController@create');
 Route::post('/todos/create', 'TodoController@store');
 Route::get('/todos/{id}/edit', 'TodoController@edit');

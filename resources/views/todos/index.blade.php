@@ -2,11 +2,18 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <h1 class="text-2x1">All Deliveries</h1>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <a href="{{ url('/todos/create') }}" class="btn btn-outline-success">Create</a>
+        </div>
+        <div class="col-lg-4">
+            <form method="post" action="{{ url('/todos/importexcel') }}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="col-lg-4"><input type="file" name="csvfile"/></div>
+                <div class="col-lg-4"><input type="submit" name="uploadcsv" id="uploadcsv"/></div>
+            </form>
         </div>
     </div>
     <div class="row">

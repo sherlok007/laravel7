@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoCreateRequest;
+use App\Imports\TodosImport;
 use App\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TodoController extends Controller
 {
@@ -47,5 +50,11 @@ class TodoController extends Controller
         ]);
         return redirect(route('todo.index'))->with('success', 'Updated successfully');
 
+    }
+
+    //Import excel file
+    public function importexcel(Request $request) {
+        Excel::import(new TodosImport, request()->file('csvfile'));
+        return redirect(route('todo.index'))->with('success', 'Imported successfully');
     }
 }
