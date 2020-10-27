@@ -25,6 +25,8 @@ Route::post('/todos/create', 'TodoController@store');
 Route::get('/todos/{id}/edit', 'TodoController@edit');
 Route::patch('/todos/{id}/update', 'TodoController@update')->name('todo.update');
 
+Route::get('/todos/search', 'TodoController@search')->name('todo.search');
+
 Route::post('/upload', 'UserController@uploadAvatar');
 
 Auth::routes();

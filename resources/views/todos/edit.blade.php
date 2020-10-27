@@ -17,16 +17,23 @@
                 <h4 class="mb-3">Update Details</h4>
                 <form class="needs-validation" novalidate="">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="buyer_name">Buyer Name</label>
                             <input type="text" class="form-control" name="buyer_name" id="buyer_name" value="{{ $todo->buyer_name }}" required="">
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="buyer_phone">Buyer Phone</label>
                             <input type="number" class="form-control" name="buyer_phone" id="buyer_phone" value="{{ $todo->buyer_phone }}">
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="price">Price ( <i class="fa fa-rupee"></i> )</label>
+                            <input type="text" class="form-control" name="price" id="price" value="{{ $todo->price }}">
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>

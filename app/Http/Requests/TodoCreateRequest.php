@@ -27,6 +27,7 @@ class TodoCreateRequest extends FormRequest
             'buyer_name' => 'required',
             'consign_no' => 'required|max:15',
             'order_no' => 'required',
+            'price' => 'numeric',
             'order_date' => 'date_format:Y-m-d',
         ];
     }
