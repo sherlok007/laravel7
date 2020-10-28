@@ -28,6 +28,7 @@ class TodosImport implements ToModel, WithHeadingRow
                 'buyer_name' => ucwords($row['buyer_name']),
                 'buyer_phone' => $row['buyer_phone'],
                 'buyer_address' => ucwords($row['buyer_address']),
+                'price' => $row['price'],
                 'consign_no' => $row['consign_no'],
                 'order_date' => $date,
                 'refund_applied' => empty($row['refund_applied']) ? 0 : 1,
