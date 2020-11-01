@@ -32,11 +32,10 @@
 
 <script>
     $(document).ready(function() {
-        //fetch_customer_data();
-        function fetch_customer_data(query='') {
-            console.log(query);
+        fetch_customer_data('');
+        function fetch_customer_data(page, query='') {
             $.ajax({
-                url:"{{ route('todo.search') }}",
+                url:"{{ route('todo.search') }}?page="+page,
                 method: 'GET',
                 data: {query:query},
                 dataType: 'json',
@@ -49,6 +48,17 @@
         $(document).on('keyup', '#search', function() {
             var query = $(this).val();
             fetch_customer_data(query);
+        });
+
+        $(document).on('click', '.pagination .page-link', function(event) {
+            event.preventDefault();
+            if (typeof $(this).attr('href')=='undefined') {
+                var page = $(this).text();
+            } else {
+                var page = $(this).attr('href').split('page=')[1];
+            }
+
+            fetch_customer_data(page);
         });
     });
 </script>

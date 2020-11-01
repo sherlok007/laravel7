@@ -19,6 +19,11 @@ class TodoController extends Controller
         //return view('todos.index')->with(['todos' => $todos]);
     }
 
+    public function fetch_data() {
+        $todos = Todo::paginate(10);
+        return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
+    }
+
     public function create() {
         return view('todos.create');
     }
@@ -67,11 +72,12 @@ class TodoController extends Controller
         if ($request->ajax()) {
             $output = '';
             $query = $request->get('query');
-            if($query != '') {
+            if(!empty($query)) {
                 $data = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->get();
             } else {
-                $data = DB::table('todos')->orderBy('id', 'DESC')->paginate(5);
+                $data = Todo::paginate(10);
             }
+
             $total_row = $data->count();
             if ($total_row > 0) {
                 foreach($data as $row) {

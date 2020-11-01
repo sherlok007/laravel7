@@ -44,23 +44,23 @@
                 <th>Delivered</th>
             </thead>
             <tbody>
-            @foreach($todos as $todo)
-                <tr>
-                    <td>{{ $todo->order_no }}</td>
-                    <td>{{ $todo->buyer_name }}</td>
-                    <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>
-                    <td>{{ $todo->consign_no }}</td>
-                    <td><a href="{{ url('/todos/'.$todo->id.'/edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                    <td>@if (!empty($todo->refund_applied)) <span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span> @else <span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span> @endif</td>
-                    <td>
-                        @if ($todo->completed)
-                            <i class="fa fa-check" style="color: lightseagreen; cursor: pointer;"></i>
-                        @else
-                            <i class="fa fa-check" style="color: lightgrey; cursor: pointer;"></i>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
+{{--            @foreach($todos as $todo)--}}
+{{--                <tr>--}}
+{{--                    <td>{{ $todo->order_no }}</td>--}}
+{{--                    <td>{{ $todo->buyer_name }}</td>--}}
+{{--                    <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>--}}
+{{--                    <td>{{ $todo->consign_no }}</td>--}}
+{{--                    <td><a href="{{ url('/todos/'.$todo->id.'/edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>--}}
+{{--                    <td>@if (!empty($todo->refund_applied)) <span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span> @else <span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span> @endif</td>--}}
+{{--                    <td>--}}
+{{--                        @if ($todo->completed)--}}
+{{--                            <i class="fa fa-check" style="color: lightseagreen; cursor: pointer;"></i>--}}
+{{--                        @else--}}
+{{--                            <i class="fa fa-check" style="color: lightgrey; cursor: pointer;"></i>--}}
+{{--                        @endif--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--            @endforeach--}}
             </tbody>
         </table>
     </div>
