@@ -32,7 +32,7 @@
 
 <script>
     $(document).ready(function() {
-        fetch_customer_data();
+        //fetch_customer_data();
         function fetch_customer_data(query='') {
             console.log(query);
             $.ajax({

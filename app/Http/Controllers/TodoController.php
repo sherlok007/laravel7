@@ -70,7 +70,7 @@ class TodoController extends Controller
             if($query != '') {
                 $data = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->get();
             } else {
-                $data = DB::table('todos')->orderBy('id', 'DESC')->get();
+                $data = DB::table('todos')->orderBy('id', 'DESC')->paginate(5);
             }
             $total_row = $data->count();
             if ($total_row > 0) {
