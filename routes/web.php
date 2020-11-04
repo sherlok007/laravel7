@@ -19,7 +19,6 @@ Route::get('/', function () {
 });
 
 Route::get('/todos', 'TodoController@index')->name('todo.index');
-Route::get('/todos/fetch_data', 'TodoController@fetch_data');
 Route::post('/todos/importexcel', 'TodoController@importexcel');
 Route::get('/todos/create', 'TodoController@create');
 Route::post('/todos/create', 'TodoController@store');

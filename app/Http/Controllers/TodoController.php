@@ -19,11 +19,6 @@ class TodoController extends Controller
         //return view('todos.index')->with(['todos' => $todos]);
     }
 
-    public function fetch_data() {
-        $todos = Todo::paginate(10);
-        return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
-    }
-
     public function create() {
         return view('todos.create');
     }
@@ -68,46 +63,17 @@ class TodoController extends Controller
         }
     }
 
-    public function search(Request $request) {
-        if ($request->ajax()) {
-            $output = '';
-            $query = $request->get('query');
-            if(!empty($query)) {
-                $data = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->get();
-            } else {
-                $data = Todo::paginate(10);
-            }
-
-            $total_row = $data->count();
-            if ($total_row > 0) {
-                foreach($data as $row) {
-                    $refund = !empty($row->refund_applied) ? '<span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span>' : '<span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span>';
-                    $price = !empty($row->refund_applied) ? '<span style="color: red;">-'. number_format($row->price, 2) .'</span>' : '<span style="color: forestgreen;">'. number_format($row->price, 2) .'</span>';
-                    $url = url('/todos/'.$row->id.'/edit');
-                    $check = !empty($row->completed) ? '<i class="fa fa-check" style="color: lightseagreen; cursor: pointer;"></i>': '<i class="fa fa-check" style="color: lightgrey; cursor: pointer;"></i>';
-
-                    $output .= '
-                        <tr>
-                            <td>'.$row->order_no.'</td>
-                            <td>'.$row->buyer_name.'</td>
-                            <td style="text-align:right;">'.$price.'</td>
-                            <td>'.$row->consign_no.'</td>
-                            <td><a href="'.$url.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                            <td>'.$refund.'</td>
-                            <td>'.$check.'</td>
-                        </tr>
-                    ';
-                }
-            } else {
-                $output = '<tr><td align="center" colspan="7">No Data Found</td></tr>';
-            }
-
-            $data = array(
-                'table_data' => $output
-            );
-
-            echo json_encode($data);
+    public function search() {
+        if (!empty($_REQUEST['query'])) {
+            $query = $_GET['query'];
+            $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+        } else {
+            $todos = Todo::paginate(10);
         }
+
+        return view('todos.index')->with([
+            'todos' => $todos
+        ]);
     }
 
 }
