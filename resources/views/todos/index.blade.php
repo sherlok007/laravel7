@@ -26,12 +26,7 @@
             </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12 form-group">
-            <input type="text" name="search" id="search" class="form-control">
-        </div>
-    </div>
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
         <x-alert />
         <table class="table table-hover" id="todosIndex">
             <thead>

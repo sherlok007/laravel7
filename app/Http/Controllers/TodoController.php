@@ -14,7 +14,7 @@ class TodoController extends Controller
 {
     public function index() {
         //$todos = Todo::all()->paginate(5);;
-        $todos = Todo::paginate(10);
+        $todos = DB::table('todos')->orderBy('order_date', 'asc')->paginate(10);
         return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
         //return view('todos.index')->with(['todos' => $todos]);
     }
