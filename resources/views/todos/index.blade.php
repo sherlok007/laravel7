@@ -43,8 +43,8 @@
             <tbody>
             @foreach($todos as $todo)
                 <tr>
-                    <td>{{ $todo->order_no }}</td>
-                    <td>{{ $todo->buyer_name }}</td>
+                    <td><span onclick="pasteMe($(this).text())">{{ $todo->order_no }}</span></td>
+                    <td><span onclick="pasteMe($(this).text())">{{ $todo->buyer_name }}</span></td>
                     <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>
                     <td>{{ $todo->consign_no }}</td>
                     <td>{{ $todo->order_date }}</td>
@@ -59,4 +59,6 @@
         <div class="col-md-6 offset-md-3">{!! $todos->links() !!}</div>
     </div>
 @endsection
+
+
 

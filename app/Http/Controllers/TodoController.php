@@ -66,7 +66,16 @@ class TodoController extends Controller
     public function search() {
         if (!empty($_REQUEST['query'])) {
             $query = $_GET['query'];
-            $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+
+            switch($_REQUEST['searchOption']) {
+                case '2': $todos = DB::table('todos')->where('order_no', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    break;
+                case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    break;
+                default:
+                    //$todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+                    $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+            }
         } else {
             $todos = Todo::paginate(10);
         }
