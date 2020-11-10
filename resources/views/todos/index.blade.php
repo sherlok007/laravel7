@@ -37,14 +37,19 @@
                 <th>Order Dt.</th>
                 <th>Status</th>
                 <th>Action</th>
-
-
             </thead>
             <tbody>
             @foreach($todos as $todo)
                 <tr>
                     <td><span onclick="pasteMe($(this).text())">{{ $todo->order_no }}</span></td>
-                    <td><span onclick="pasteMe($(this).text())">{{ $todo->buyer_name }}</span></td>
+                    @foreach($repeatCustomer as $repeat)
+                        @if($repeat->buyer_phone == $todo->buyer_phone)
+                            <td><span onclick="pasteMe($(this).text())">{{ $todo->buyer_name }}</span><span style="color: forestgreen;"> (Repeat)</span></td>
+                        @else
+                            <td><span onclick="pasteMe($(this).text())">{{ $todo->buyer_name }}</span></td>
+                        @endif
+                    @endforeach
+
                     <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>
                     <td>{{ $todo->consign_no }}</td>
                     <td>{{ $todo->order_date }}</td>

@@ -37,7 +37,7 @@
             </li>
         </ul>
 
-        <form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/todos/search') }}">
+        <form id="customerIndex" class="form-inline my-2 my-lg-0" type="get" action="{{ url('/todos/search') }}">
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="searchby" style="color: white;">Search By</label>
             </div>
@@ -105,6 +105,8 @@
                     break;
                 default: alert("Please enter a name to search");
             }
+        } else {
+            $('#customerIndex').submit();
         }
     }
 </script>

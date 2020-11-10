@@ -15,8 +15,13 @@ class TodoController extends Controller
     public function index() {
         //$todos = Todo::all()->paginate(5);;
         $todos = DB::table('todos')->orderBy('order_date', 'asc')->paginate(10);
-        return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
-        //return view('todos.index')->with(['todos' => $todos]);
+        $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
+
+        //return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
+        return view('todos.index')->with([
+            'todos' => $todos,
+            'repeatCustomer' => $repeatCustomer
+        ]);
     }
 
     public function create() {
@@ -69,19 +74,23 @@ class TodoController extends Controller
 
             switch($_REQUEST['searchOption']) {
                 case '2': $todos = DB::table('todos')->where('order_no', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
                     break;
                 case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
                     break;
                 default:
                     //$todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
                     $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+                    $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
             }
         } else {
             $todos = Todo::paginate(10);
         }
 
         return view('todos.index')->with([
-            'todos' => $todos
+            'todos' => $todos,
+            'repeatCustomer' => $repeatCustomer
         ]);
     }
 
