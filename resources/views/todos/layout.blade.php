@@ -54,8 +54,9 @@
                 <label class="form-check-label" for="searchOption3" style="color: white;">Phone</label>
             </div>
             <input class="form-control mr-sm-2" type="search" placeholder="Search" id="query" aria-label="Search" name="query" value=@if (!empty($_GET['query'])) {{ trim($_GET['query']) }} @endif>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="validateSearch(); return false;">Search</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 5px;" onclick="validateSearch(); return false;">Search</button>
         </form>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="searchReset(); return false;">Reset Search</button>
     </div>
 </nav>
 
@@ -107,6 +108,14 @@
             }
         } else {
             $('#customerIndex').submit();
+        }
+    }
+
+    // Reset page back to index
+    function searchReset() {
+        var url = {!! json_encode(url('/todos')) !!}
+        if (url != '' || typeof (url) != "undefined") {
+            window.location.href = url;
         }
     }
 </script>
