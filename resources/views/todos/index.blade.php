@@ -54,7 +54,7 @@
                     <td>{{ $todo->consign_no }}</td>
                     <td>{{ date("d/m/Y", strtotime($todo->order_date)) }}</td>
                     <td>@if (!empty($todo->refund_applied)) <span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span> @else <span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span> @endif</td>
-                    <td><a href="{{ url('/todos/'.$todo->id.'/edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                    <td><a href="{{ url('/todos/'.$todo->id.'/edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> / <a href="{{ url('/todos/'.$todo->id.'/view') }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
                 </tr>
             @endforeach
             </tbody>

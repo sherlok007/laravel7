@@ -23,6 +23,7 @@ Route::post('/todos/importexcel', 'TodoController@importexcel');
 Route::get('/todos/create', 'TodoController@create');
 Route::post('/todos/create', 'TodoController@store');
 Route::get('/todos/{id}/edit', 'TodoController@edit');
+Route::get('/todos/{id}/view', 'TodoController@view');
 Route::patch('/todos/{id}/update', 'TodoController@update')->name('todo.update');
 
 Route::get('/todos/search', 'TodoController@search')->name('todo.search');

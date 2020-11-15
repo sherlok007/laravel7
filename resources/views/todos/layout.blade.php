@@ -89,8 +89,17 @@
 <script>
     $(document).ready(function() {
 
+        var url = window.location.pathname;
+        if (url.indexOf("edit") > -1) {
+            if ($('#refund_applied').is(":checked") == true) {
+                $('#refund_reason').prop("readonly", false);
+            } else {
+                $('#refund_reason').prop("readonly", true);
+            }
+        }
     });
 
+    //On clicking name or order no. automatically paste them in search textfield
     function pasteMe(val) {
         $('#query').val(val);
     }

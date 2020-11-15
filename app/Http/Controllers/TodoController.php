@@ -28,6 +28,11 @@ class TodoController extends Controller
         return view('todos.create');
     }
 
+    public function view($id) {
+        $todo = Todo::find($id);
+        return view('todos.view', compact('todo'));
+    }
+
     public function edit($id) {
         $todo = Todo::find($id);
         return view('todos.edit', compact('todo'));
@@ -54,6 +59,7 @@ class TodoController extends Controller
             'consign_no'=>$request->consign_no,
             'order_date'=>$request->order_date,
             'refund_applied'=> isset($request->refund_applied) ? 1 : 0,
+            'refund_reason'=> $request->refund_reason,
         ]);
         return redirect(route('todo.index'))->with('success', 'Updated successfully');
     }

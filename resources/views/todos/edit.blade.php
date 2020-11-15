@@ -58,7 +58,7 @@
 
                         <div class="col-md-4 mb-3">
                             <label for="consign_no">Consignment Number</label>
-                            <input type="consign_no" class="form-control" name="consign_no" id="consign_no" value="{{ $todo->consign_no }}">
+                            <input type="text" class="form-control" name="consign_no" id="consign_no" value="{{ $todo->consign_no }}">
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -70,10 +70,19 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="refund_applied" id="refund_applied" @if (!empty($todo->refund_applied)) checked='checked' @endif>
-                        <label class="custom-control-label" for="refund_applied">Refund Applied</label>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="refund_applied" id="refund_applied" @if (!empty($todo->refund_applied)) checked='checked' @endif>
+                                <label class="custom-control-label" for="refund_applied">Refund Applied</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 mb-8 form-inline">
+                            <label class="col-sm-3 col-form-label" for="refund_reason">Return Reason</label>
+                            <input type="text" class="form-control col-sm-9" name="refund_reason" id="refund_reason" value="{{ $todo->refund_reason }}">
+                        </div>
                     </div>
+
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
                 </form>
