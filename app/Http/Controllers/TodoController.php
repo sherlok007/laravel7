@@ -64,6 +64,12 @@ class TodoController extends Controller
         return redirect(route('todo.index'))->with('success', 'Updated successfully');
     }
 
+    public function delete($id) {
+        $todo = Todo::find($id);
+        $todo->delete();
+        return redirect(route('todo.index'))->with('success', 'Customer deleted successfully');
+    }
+
     //Import excel file
     public function importexcel(Request $request) {
         if($request->has('csvfile')) {

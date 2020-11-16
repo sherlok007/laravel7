@@ -54,7 +54,13 @@
                     <td>{{ $todo->consign_no }}</td>
                     <td>{{ date("d/m/Y", strtotime($todo->order_date)) }}</td>
                     <td>@if (!empty($todo->refund_applied)) <span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span> @else <span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span> @endif</td>
-                    <td><a href="{{ url('/todos/'.$todo->id.'/edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> / <a href="{{ url('/todos/'.$todo->id.'/view') }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                    <td><a href="{{ route('todo.view', $todo->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a> | <a href="{{ route('todo.edit', $todo->id) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> | <i class="fa fa-trash cursor-pointer" style="color: orangered;" aria-hidden="true" onclick="if (confirm('Are you really want to delete?')) { document.getElementById('form-delete-{{ $todo->id }}').submit() }"></i></td>
+
+                    <form method="post" style="display: none;" action="{{ route('todo.delete', $todo->id) }}" id="{{ 'form-delete-' . $todo->id }}">
+                        @csrf
+                        @method('delete')
+                    </form>
+
                 </tr>
             @endforeach
             </tbody>

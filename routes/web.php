@@ -22,9 +22,10 @@ Route::get('/todos', 'TodoController@index')->name('todo.index');
 Route::post('/todos/importexcel', 'TodoController@importexcel');
 Route::get('/todos/create', 'TodoController@create');
 Route::post('/todos/create', 'TodoController@store');
-Route::get('/todos/{id}/edit', 'TodoController@edit');
-Route::get('/todos/{id}/view', 'TodoController@view');
+Route::get('/todos/{id}/edit', 'TodoController@edit')->name('todo.edit');
+Route::get('/todos/{id}/view', 'TodoController@view')->name('todo.view');
 Route::patch('/todos/{id}/update', 'TodoController@update')->name('todo.update');
+Route::delete('/todos/{id}/delete', 'TodoController@delete')->name('todo.delete');
 
 Route::get('/todos/search', 'TodoController@search')->name('todo.search');
 
