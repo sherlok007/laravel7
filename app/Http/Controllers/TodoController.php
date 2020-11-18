@@ -81,6 +81,17 @@ class TodoController extends Controller
     }
 
     public function search() {
+
+        if ($_REQUEST['start_date'] && $_REQUEST['end_date']) {
+            $queryCondition = "->orWhere('name', 'John')";
+        } else if ($_REQUEST['end_date']) {
+
+        } else if ($_REQUEST['end_date']) {
+
+        } else {
+            $queryCondition = '';
+        }
+
         if (!empty($_REQUEST['query'])) {
             $query = $_GET['query'];
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
