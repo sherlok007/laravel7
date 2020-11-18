@@ -37,7 +37,7 @@
             </li>
         </ul>
 
-        <form id="customerIndex" class="form-inline my-2 my-lg-0" type="get" action="{{ url('/todos/search') }}">
+        <form id="customerIndex" class="form-inline my-2 my-lg-0" type="get" action="{{route('todo.search') }}">
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="searchby" style="color: white;">Search By</label>
             </div>
@@ -56,11 +56,11 @@
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="start_date" style="color: white;">Start Date</label>
             </div>
-            <input type="date" class="form-control mr-sm-2" id="start_date" name="start_date" value="" />
+            <input type="date" class="form-control mr-sm-2" id="start_date" name="start_date" value="@if (!empty($_GET['start_date'])) {{ trim($_GET['start_date']) }} @endif" />
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="end_date" style="color: white;">End Date</label>
             </div>
-            <input type="date" class="form-control mr-sm-2" id="end_date" name="end_date" value="" />
+            <input type="date" class="form-control mr-sm-2" id="end_date" name="end_date" value="@if (!empty($_GET['end_date'])) {{ trim($_GET['end_date']) }} @endif" />
             <input class="form-control mr-sm-2" type="search" placeholder="Search" id="query" aria-label="Search" name="query" value=@if (!empty($_GET['query'])) {{ trim($_GET['query']) }} @endif>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 5px;" onclick="validateSearch(); return false;">Search</button>
         </form>
@@ -116,7 +116,7 @@
 
         $error = true;
 
-        if($('#query').val() == '') {
+        /*if($('#query').val() == '') {
             switch($("input[name='searchOption']:checked").val()) {
                 case '2':
                     alert("Please enter an order no to search");
@@ -128,12 +128,16 @@
             }
         } else {
             $error = false;
-        }
+        }*/
 
         // If validation returns no error
-        if ($error == false) {
+        //if ($error == false) {
+
+            if($("#query").val()=="") {
+                $("#query").remove();
+            }
             $('#customerIndex').submit();
-        }
+        //}
     }
 
     // Reset page back to index

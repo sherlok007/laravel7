@@ -67,7 +67,7 @@
         </table>
     </div>
     <div class="row">
-        <div class="col-md-6 offset-md-3">{!! $todos->links() !!}</div>
+        <div class="col-md-6 offset-md-3">{!! $todos->appends($_GET)->links() !!}</div>
     </div>
 @endsection
 

@@ -81,32 +81,60 @@ class TodoController extends Controller
     }
 
     public function search() {
-
-        if ($_REQUEST['start_date'] && $_REQUEST['end_date']) {
-            $queryCondition = "->orWhere('name', 'John')";
-        } else if ($_REQUEST['end_date']) {
-
-        } else if ($_REQUEST['end_date']) {
-
-        } else {
-            $queryCondition = '';
-        }
-
         if (!empty($_REQUEST['query'])) {
             $query = $_GET['query'];
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
 
             switch($_REQUEST['searchOption']) {
-                case '2': $todos = DB::table('todos')->where('order_no', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                case '2':
+                    $has_dates = $this->chkDates($_REQUEST['start_date'],  $_REQUEST['end_date']);
+                    switch ($has_dates) {
+                        case '3': $todos = DB::table('todos')->where('order_no', trim($query))->whereBetween('order_date', [$_REQUEST['start_date'], $_REQUEST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '2':  $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '>=', $_REQUEST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '1': $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '<=', $_REQUEST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        default: $todos = DB::table('todos')->where('order_no', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    }
                     break;
-                case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                case '3':
+                    $has_dates = $this->chkDates($_REQUEST['start_date'],  $_REQUEST['end_date']);
+                    switch ($has_dates) {
+                        case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereBetween('order_date', [$_REQUEST['start_date'], $_REQUEST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '2': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '>=', $_REQUEST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '1': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '<=', $_REQUEST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        default: $todos = DB::table('todos')->where('buyer_phone', trim($query))->orderBy('id', 'DESC')->paginate(10);
+                    }
                     break;
                 default:
                     //$todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
-                    $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+                    $has_dates = $this->chkDates($_REQUEST['start_date'],  $_REQUEST['end_date']);
+                    switch ($has_dates) {
+                        case '3': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereBetween('order_date', [$_REQUEST['start_date'], $_REQUEST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '2': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '>=', $_REQUEST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        case '1': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '<=', $_REQUEST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                            break;
+                        default: $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
+                    }
+                    break;
             }
         } else {
-            $todos = Todo::paginate(10);
+            $has_dates = $this->chkDates($_REQUEST['start_date'],  $_REQUEST['end_date']);
+            switch ($has_dates) {
+                case '3': $todos = DB::table('todos')->whereBetween('order_date', [$_REQUEST['start_date'], $_REQUEST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                    break;
+                case '2': $todos = DB::table('todos')->whereDate('order_date', '>=', $_REQUEST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                    break;
+                case '1': $todos = DB::table('todos')->whereDate('order_date', '<=', $_REQUEST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                    break;
+                default: $todos = Todo::paginate(10);
+            }
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
         }
 
@@ -114,6 +142,18 @@ class TodoController extends Controller
             'todos' => $todos,
             'repeatCustomer' => $repeatCustomer
         ]);
+    }
+
+    public function chkDates($startDt, $endDt) {
+        if ($startDt && $endDt) {
+            return "3";
+        } else if ($endDt) {
+            return "2";
+        } else if ($startDt) {
+            return "1";
+        } else {
+            return "0";
+        }
     }
 
 }
