@@ -57,18 +57,17 @@
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="start_date" style="color: white;">Start Date</label>
             </div>
-            <input type="date" class="form-control mr-sm-2" id="start_date" name="start_date" value="@if (!empty($_GET['start_date'])) {{ trim($_GET['start_date']) }} @endif" />
+            <input type="date" class="form-control mr-sm-2" id="start_date" name="start_date" value="{{ $start_dt ?? '' }}" />
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="end_date" style="color: white;">End Date</label>
             </div>
-            <input type="date" class="form-control mr-sm-2" id="end_date" name="end_date" value="@if (!empty($_GET['end_date'])) {{ trim($_GET['end_date']) }} @endif" />
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" id="query" aria-label="Search" name="query" value=@if (!empty($_GET['query'])) {{ trim($_GET['query']) }} @endif>
+            <input type="date" class="form-control mr-sm-2" id="end_date" name="end_date" value="{{ $end_dt ?? '' }}" />
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" id="query" aria-label="Search" name="query" value="{{ $searchquery ?? '' }}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-right: 5px;" onclick="validateSearch(); return false;">Search</button>
         </form>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="searchReset(); return false;">Reset Search</button>
     </div>
 </nav>
-
 
 <main role="main" class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
