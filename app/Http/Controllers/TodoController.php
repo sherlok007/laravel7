@@ -80,7 +80,7 @@ class TodoController extends Controller
         }
     }
 
-    public function search() {
+    /*public function search() {
         if (!empty($_REQUEST['query'])) {
             $query = $_GET['query'];
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
@@ -142,6 +142,10 @@ class TodoController extends Controller
             'todos' => $todos,
             'repeatCustomer' => $repeatCustomer
         ]);
+    }*/
+
+    public function search() {
+        dd($_POST);
     }
 
     public function chkDates($startDt, $endDt) {

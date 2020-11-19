@@ -37,7 +37,8 @@
             </li>
         </ul>
 
-        <form id="customerIndex" class="form-inline my-2 my-lg-0" type="get" action="{{route('todo.search') }}">
+        <form id="customerIndex" class="form-inline my-2 my-lg-0" method="post" action="{{ route('todo.search') }}">
+            {{ csrf_field() }}
             <div class="form-check form-check-inline">
                 <label class="form-check-label" for="searchby" style="color: white;">Search By</label>
             </div>
