@@ -12,9 +12,16 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TodoController extends Controller
 {
+
+    // Check if an user is logged in
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
         //$todos = Todo::all()->paginate(5);;
-        $todos = DB::table('todos')->orderBy('order_date', 'asc')->paginate(10);
+        $todos = DB::table('todos')->orderBy('order_date', 'desc')->paginate(10);
         $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
 
         //return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
@@ -87,7 +94,7 @@ class TodoController extends Controller
 
             switch($_POST['searchOption']) {
                 case '2':
-                    $has_dates = $this->chkDates($_POST['start_date'],  $_POST['end_date']);
+                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
                     switch ($has_dates) {
                         case '3': $todos = DB::table('todos')->where('order_no', trim($query))->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
@@ -99,7 +106,7 @@ class TodoController extends Controller
                     }
                     break;
                 case '3':
-                    $has_dates = $this->chkDates($_POST['start_date'],  $_POST['end_date']);
+                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
                     switch ($has_dates) {
                         case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
@@ -112,7 +119,7 @@ class TodoController extends Controller
                     break;
                 default:
                     //$todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
-                    $has_dates = $this->chkDates($_POST['start_date'],  $_POST['end_date']);
+                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
                     switch ($has_dates) {
                         case '3': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
@@ -125,7 +132,7 @@ class TodoController extends Controller
                     break;
             }
         } else {
-            $has_dates = $this->chkDates($_POST['start_date'],  $_POST['end_date']);
+            $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
             switch ($has_dates) {
                 case '3': $todos = DB::table('todos')->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
                     break;
@@ -142,6 +149,7 @@ class TodoController extends Controller
             'todos' => $todos,
             'repeatCustomer' => $repeatCustomer,
             'searchquery' => !empty($_POST['query']) ? $_POST['query'] : '',
+            'searchOption' => !empty($_POST['searchOption']) ? $_POST['searchOption'] : '',
             'start_dt' => !empty($_POST['start_date']) ? $_POST['start_date'] : '',
             'end_dt' => !empty($_POST['end_date']) ? $_POST['end_date'] : '',
         ]);
