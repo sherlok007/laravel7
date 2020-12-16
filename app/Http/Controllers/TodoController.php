@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class TodoController extends Controller
 {
@@ -20,15 +21,18 @@ class TodoController extends Controller
     }
 
     public function index() {
-        //$todos = Todo::all()->paginate(5);;
         $todos = DB::table('todos')->orderBy('order_date', 'desc')->paginate(10);
         $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
 
-        //return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
-        return view('todos.index')->with([
-            'todos' => $todos,
-            'repeatCustomer' => $repeatCustomer
-        ]);
+        if (Str::startsWith(request()->path(), 'api')) {
+            return compact('todos', 'repeatCustomer');
+        } else {
+            //return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
+            return view('todos.index')->with([
+                'todos' => $todos,
+                'repeatCustomer' => $repeatCustomer
+            ]);
+        }
     }
 
     public function create() {

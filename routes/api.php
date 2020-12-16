@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::group([
+    //'prefix' => 'auth'
+], function() {
+    Route::post('/login', 'ApiAuthController@login');
+    Route::post('/signup', 'ApiAuthController@register');
+
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('/logout', 'ApiAuthController@logout');
+        Route::get('/user', 'ApiAuthController@user');
+        Route::get('/todos', 'TodoController@index');
+    });
+    Route::get('/home', 'HomeController@index')->name('home');
 });
