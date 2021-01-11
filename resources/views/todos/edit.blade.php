@@ -39,14 +39,32 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="buyer_address">Buyer Address</label>
-                        <input type="text" class="form-control" name="buyer_address" id="buyer_address" value="{{ $todo->buyer_address }}">
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="buyer_address">Buyer Address</label>
+                            <input type="text" class="form-control" name="buyer_address" id="buyer_address" value="{{ $todo->buyer_address }}">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="buyer_state">State</label>
+                            <select class="form-control" name="buyer_state" id="buyer_state">
+                                <option>---Select State---</option>
+                                @foreach ($state as $key=>$val)
+                                    @php $selected = ''; @endphp
+                                    @if($key == $todo->buyer_state )
+                                        @php $selected = 'selected="selected"'; @endphp
+                                    @endif
+                                    <option value="{{ $key }}" {{ $selected }}>{{ $val }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="order_no">Order Number</label>
