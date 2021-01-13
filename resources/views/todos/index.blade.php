@@ -4,6 +4,12 @@
     <div class="row">
         <div class="col-md-12">
             <!-- general form elements disabled -->
+
+
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+
             <div class="card card-warning">
                 <div class="card-header">
                     <div class="form-check-inline">
@@ -119,6 +125,7 @@
 @endsection
 
 @section('js')
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script>
 
         var url = window.location.pathname;
@@ -152,5 +159,45 @@
             }
         }
 
+        // Chart function
+
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                title:{
+                    text: "Simple Column Chart with Index Labels"
+                },
+                axisY: {
+                    includeZero: true
+                },
+                data: [{
+                    type: "column", //change type to bar, line, area, pie, etc
+                    //indexLabel: "{y}", //Shows y value on all Data Points
+                    indexLabelFontColor: "#5A5757",
+                    indexLabelFontSize: 16,
+                    indexLabelPlacement: "outside",
+                    dataPoints: [
+                        { x: 10, y: 71 },
+                        { x: 20, y: 55 },
+                        { x: 30, y: 50 },
+                        { x: 40, y: 65 },
+                        { x: 50, y: 92, indexLabel: "\u2605 Highest" },
+                        { x: 60, y: 68 },
+                        { x: 70, y: 38 },
+                        { x: 80, y: 71 },
+                        { x: 90, y: 54 },
+                        { x: 100, y: 60 },
+                        { x: 110, y: 36 },
+                        { x: 120, y: 49 },
+                        { x: 130, y: 21, indexLabel: "\u2691 Lowest" }
+                    ]
+                }]
+            });
+            chart.render();
+
+        }
     </script>
 @stop
