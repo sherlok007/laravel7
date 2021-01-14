@@ -160,9 +160,9 @@ DROP TABLE IF EXISTS `state_wise_order`;
 
 CREATE TABLE `state_wise_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -176,12 +176,14 @@ DROP TABLE IF EXISTS `states`;
 
 CREATE TABLE `states` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `states` */
+
+insert  into `states`(`id`,`code`,`value`) values (1,'35','Andaman and Nicobar Islands'),(2,'37','Andhra Pradesh'),(3,'12','Arunachal Pradesh'),(4,'18','Assam'),(5,'04','Chandigarh'),(6,'22','Chhattisgarh'),(7,'26','Dadra and Nagar Haveli and Daman and Diu'),(8,'25','Daman and Diu'),(9,'07','Delhi'),(10,'30','Goa'),(11,'24','Gujarat'),(12,'06','Haryana'),(13,'02','Himachal Pradesh'),(14,'01','Jammu and Kashmir'),(15,'20','Jharkhand'),(16,'29','Karnataka'),(17,'32','Kerala'),(18,'38','Ladakh'),(19,'31','Lakshadweep'),(20,'23','Madhya Pradesh'),(21,'27','Maharashtra'),(22,'14','Manipur'),(23,'17','Meghalaya'),(24,'15','Mizoram'),(25,'13','Nagaland'),(26,'21','Odisha'),(27,'97','Other Territory'),(28,'34','Puducherry'),(29,'03','Punjab'),(30,'08','Rajasthan'),(31,'11','Sikkim'),(32,'33','Tamil Nadu'),(33,'36','Telangana'),(34,'16','Tripura'),(35,'09','Uttar Pradesh'),(36,'05','Uttarakhand'),(37,'19','West Bengal');
 
 /*Table structure for table `todos` */
 
@@ -193,7 +195,7 @@ CREATE TABLE `todos` (
   `buyer_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `buyer_phone` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `buyer_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `buyer_state` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buyer_state` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` float(11,2) DEFAULT NULL,
   `consign_no` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order_date` date DEFAULT NULL,
