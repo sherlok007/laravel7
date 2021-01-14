@@ -2,14 +2,21 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <!-- general form elements disabled -->
-
-
+        <div class="col-md-12" style="margin-bottom:15px;">
+            <div>
+            {{--Graph Controls--}}
+                <label for="year_list">Select Year</label>
+                <select name="year_list" id="year_list" onchange="getMonthPrice($(this)); return false;">
+                    <option value="">Select</option>
+                    <option value="2020" default selected>2020</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
-
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="card card-warning">
                 <div class="card-header">
                     <div class="form-check-inline">
@@ -62,7 +69,6 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
     <div class="row">
@@ -127,7 +133,6 @@
 @section('js')
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script>
-
         var url = window.location.pathname;
         if (url.indexOf("edit") > -1) {
             if ($('#refund_applied').is(":checked") == true) {
@@ -159,45 +164,133 @@
             }
         }
 
-        // Chart function
+        // Get price month year bar graph data from API
+        function getMonthPrice(e){
+            let selected_year = e.find(":selected").text();
+            $.get(`http://localhost/myprogs/laravel7/public/api/graph/monthprice/${selected_year}/get`,(function(resp){
+                // console.log();
+                loadMonthPriceGraph(JSON.parse(resp),selected_year)
+            }));
+        }
 
-        window.onload = function () {
-
+        function loadMonthPriceGraph(data,selected_year){
+            dataset = [];
+            $.each(data,function(index,value){
+                dataset.push({x:index,y:value.total_amount,label:value.order_month});
+            });
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 exportEnabled: true,
                 theme: "light1", // "light1", "light2", "dark1", "dark2"
                 title:{
-                    text: "Simple Column Chart with Index Labels"
+                    text: `Monthly Sales (${selected_year})`
                 },
                 axisY: {
+                    title: "Amount in Rupees",
+                    titleFontSize:13,
                     includeZero: true
                 },
                 data: [{
                     type: "column", //change type to bar, line, area, pie, etc
-                    //indexLabel: "{y}", //Shows y value on all Data Points
+                    indexLabel: "₹{y}", //Shows y value on all Data Points
                     indexLabelFontColor: "#5A5757",
                     indexLabelFontSize: 16,
                     indexLabelPlacement: "outside",
-                    dataPoints: [
-                        { x: 10, y: 71 },
-                        { x: 20, y: 55 },
-                        { x: 30, y: 50 },
-                        { x: 40, y: 65 },
-                        { x: 50, y: 92, indexLabel: "\u2605 Highest" },
-                        { x: 60, y: 68 },
-                        { x: 70, y: 38 },
-                        { x: 80, y: 71 },
-                        { x: 90, y: 54 },
-                        { x: 100, y: 60 },
-                        { x: 110, y: 36 },
-                        { x: 120, y: 49 },
-                        { x: 130, y: 21, indexLabel: "\u2691 Lowest" }
-                    ]
+                    dataPoints: dataset
                 }]
             });
             chart.render();
-
+            console.log(dataset);
         }
+
+        $(document).ready(function(){
+            $("#year_list").trigger("change");
+        });
+
+        // window.onload = function(){
+            // getMonthPrice();
+        // }
+
+        // Chart function
+        // window.onload = function () {
+        //     // getMonthPrice();
+        //     var chart = new CanvasJS.Chart("chartContainer", {
+        //         animationEnabled: true,
+        //         exportEnabled: true,
+        //         theme: "light1", // "light1", "light2", "dark1", "dark2"
+        //         title:{
+        //             text: "Simple Column Chart with Index Labels"
+        //         },
+        //         axisY: {
+        //             includeZero: true
+        //         },
+        //         title:{
+        //             text: "Graph Title"
+        //         },
+        //         axisY: {
+        //             title: "Amount in Rupees",
+        //             titleFontSize:13,
+        //             labelFontStyle: "italic"
+        //         },
+        //         axisX: {
+        //             title: "Month-Year Name",
+        //             titleFontSize:13,
+        //             labelFontStyle: "italic"
+        //         },
+        //         // legend: {
+        //         //     verticalAlign: "bottom",
+        //         //     horizontalAlign: "center"
+        //         // },
+        //         data: [{
+        //             indexLabel: "₹{y}", //Shows y value on all Data Points
+        //             // showInLegend: true,
+        //             // legendMarkerType: "none",
+        //             // legendText: "MMbbl = one million barrels",
+        //             dataPoints: [
+        //                 {
+        //                     x: 1,
+        //                     y: 695,
+        //                     label: "August-2020"
+        //                 },
+        //                 {
+        //                     x: 2,
+        //                     y: 15232,
+        //                     label: "September-2020"
+        //                 },
+        //                 {
+        //                     x: 3,
+        //                     y: 7396,
+        //                     label: "October-2020"
+        //                 },
+        //                 {
+        //                     x: 4,
+        //                     y: 2542,
+        //                     label: "November-2020"
+        //                 },
+        //                 {
+        //                     x: 5,
+        //                     y: 2922,
+        //                     label: "December-2020"
+        //                 }
+        //             ]
+        //             // dataPoints: [
+        //             //     { x: 10, y: 71 },
+        //             //     { x: 20, y: 55 },
+        //             //     { x: 30, y: 50 },
+        //             //     { x: 40, y: 65 },
+        //             //     { x: 50, y: 92, indexLabel: "\u2605 Highest" },
+        //             //     { x: 60, y: 68 },
+        //             //     { x: 70, y: 38 },
+        //             //     { x: 80, y: 71 },
+        //             //     { x: 90, y: 54 },
+        //             //     { x: 100, y: 60 },
+        //             //     { x: 110, y: 36 },
+        //             //     { x: 120, y: 49 },
+        //             //     { x: 130, y: 21, indexLabel: "\u2691 Lowest" }
+        //             // ]
+        //         }]
+        //     });
+        //     chart.render();
+        // }
     </script>
 @stop

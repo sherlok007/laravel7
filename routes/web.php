@@ -36,3 +36,6 @@ Auth::routes();
 
 Route::get('/user', 'UserController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+
+// GRAPH API ROUTES
+Route::get('/api/graph/monthprice/{year}/get','TodoController@monthPriceGraph');
