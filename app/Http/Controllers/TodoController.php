@@ -176,22 +176,19 @@ class TodoController extends Controller
         }
     }
 
-    // DASHBOARD GRAPH API TO SHOW MONTH WISE PRICE BAR CHART FOR A GIVEN YEAR
+    // Function to generate data for graph to display monthly sales
     public function monthPriceGraph($year){
         $selected_year = $year;
-        $data = array();
-        if(!empty($selected_year)){
-            $sql = '
-                SELECT
-                  SUM(price) as total_amount,
-                  MONTHNAME(order_date) AS `order_month`,
-                  YEAR(order_date) AS `order_year`
-                FROM
-                  todos
-                WHERE YEAR(order_date) = "'.$selected_year.'"
-                GROUP BY MONTHNAME(order_date)
-                ORDER BY order_date
-            ';
+        if(!empty($selected_year)) {
+            $sql = 'SELECT
+                      SUM(price) AS total_amount,
+                      MONTHNAME(order_date) AS `order_month`,
+                      YEAR(order_date) AS `order_year`
+                    FROM
+                      todos
+                    WHERE YEAR(order_date) = "'.$selected_year.'"
+                    GROUP BY `order_month`, `order_year`
+                    ORDER BY order_year';
             $output = DB::select($sql);
             echo json_encode($output);
         }
