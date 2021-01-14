@@ -2,17 +2,27 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12" style="margin-bottom:15px;">
-            <div>
-            {{--Graph Controls--}}
-                <label for="year_list">Select Year</label>
-                <select name="year_list" id="year_list" onchange="getMonthPrice($(this)); return false;">
-                    <option value="">Select</option>
-                    <option value="2020" default selected>2020</option>
-                    <option value="2021">2021</option>
-                </select>
+        <div class="col-md-12">
+            <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="displayMonthlySalesGraph" onclick="displayMonthlySales(this);">
+                <label class="custom-control-label" for="displayMonthlySalesGraph">Show Monthly Sales Graph</label>
             </div>
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+
+        <div class="col-md-12" style="margin-bottom:15px;">
+            <div class="collapse" id="collapseExample">
+                <div>
+                    {{--Graph Controls--}}
+                    <label for="year_list">Select Year</label>
+                    <select name="year_list" id="year_list" onchange="getMonthPrice($(this)); return false;">
+                        <option value="">Select</option>
+                        <option value="2018">2018</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -137,7 +147,7 @@
         const currYear = (new Date().getFullYear());
 
         $(document).ready(function() {
-            $('#year_list').val(currYear).trigger('change');
+            //$('#year_list').val(currYear).trigger('change');
         });
 
         if (url.indexOf("edit") > -1) {
@@ -210,5 +220,15 @@
             chart.render();
             console.log(dataset);
         }
+
+        function displayMonthlySales(e) {
+            if(e.checked) {
+                $('#collapseExample').collapse('show');
+                $('#year_list').val(currYear).trigger('change');
+            } else {
+                $('#collapseExample').collapse('hide');
+            }
+        }
+
     </script>
 @stop

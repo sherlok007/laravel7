@@ -51,12 +51,12 @@
                             <label for="buyer_state">State</label>
                             <select class="form-control" name="buyer_state" id="buyer_state">
                                 <option>---Select State---</option>
-                                @foreach ($state as $key=>$val)
+                                @foreach ($states as $val)
                                     @php $selected = ''; @endphp
-                                    @if($key == $todo->buyer_state )
+                                    @if($val->code == $todo->buyer_state )
                                         @php $selected = 'selected="selected"'; @endphp
                                     @endif
-                                    <option value="{{ $key }}" {{ $selected }}>{{ $val }}</option>
+                                    <option value="{{ $val->code }}" {{ $selected }}>{{ $val->value }}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">

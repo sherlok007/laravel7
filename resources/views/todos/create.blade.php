@@ -38,11 +38,27 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="buyer_address">Buyer Address</label>
-                        <input type="text" class="form-control" name="buyer_address" id="buyer_address">
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
+
+
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="buyer_address">Buyer Address</label>
+                            <input type="text" class="form-control" name="buyer_address" id="buyer_address">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="buyer_state">State</label>
+                            <select class="form-control" name="buyer_state" id="buyer_state">
+                                <option>---Select State---</option>
+                                @foreach ($states as $val)
+                                    <option value="{{ $val->code }}">{{ $val->value }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
                         </div>
                     </div>
                     <div class="row">
