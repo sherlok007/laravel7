@@ -23,7 +23,7 @@ class TodoController extends Controller
 
     public function index() {
         $todos = DB::table('todos')->orderBy('order_date', 'desc')->paginate(10);
-        $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
+        $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>=', 2)->get();
 
         if (Str::startsWith(request()->path(), 'api')) {
             return compact('todos', 'repeatCustomer');
