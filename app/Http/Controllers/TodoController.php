@@ -25,13 +25,16 @@ class TodoController extends Controller
         $todos = DB::table('todos')->orderBy('order_date', 'desc')->paginate(10);
         $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>=', 2)->get();
 
+        $states = array("January"=>"January","February"=>"February","March"=>"March","April"=>"April","May"=>"May","June"=>"June","July"=>"July","August"=>"August","September"=>"September","October"=>"October","November"=>"November","December"=>"December");
+
         if (Str::startsWith(request()->path(), 'api')) {
             return compact('todos', 'repeatCustomer');
         } else {
             //return view('todos.index', compact('todos')); // The name of the variable inside `compact` should match the $todos
             return view('todos.index')->with([
                 'todos' => $todos,
-                'repeatCustomer' => $repeatCustomer
+                'repeatCustomer' => $repeatCustomer,
+                'states' => $states
             ]);
         }
     }
@@ -197,6 +200,32 @@ class TodoController extends Controller
             $output = DB::select($sql);
             echo json_encode($output);
         }
+    }
+    public function statewisePriceGraph(Request $request){
+
+
+        $selected_year = !empty($request['year']) ? $request['year'] : '';
+        $selected_month = !empty($request['month']) ? $request['month'] : '';
+
+        if(!empty($selected_year) && !empty($selected_month)) {
+            $condition = 'WHERE YEAR(t.`order_date`) = "'.$selected_year.'" AND MONTHNAME(t.`order_date`) = "'.$selected_month.'" ';
+        } else if (!empty($selected_month)) {
+            $condition = 'WHERE MONTHNAME(t.`order_date`) = "'.$selected_month.'" ';
+        } else {
+            $condition = 'WHERE YEAR(t.`order_date`) = "'.$selected_year.'" ';
+        }
+
+        $sql = 'SELECT SUM(t.`price`) AS `total_amount`,
+                        s.`value` AS `state`,
+                        YEAR(t.`order_date`) AS `order_year`
+                    FROM todos t
+                    LEFT JOIN states s ON t.`buyer_state`=s.`code`
+                    '.$condition.'
+                    GROUP BY s.`value`, order_year
+                    ORDER BY order_year';
+
+        $output = DB::select($sql);
+        echo json_encode($output);
     }
 
 }

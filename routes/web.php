@@ -39,3 +39,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // GRAPH API ROUTES
 Route::get('/api/graph/monthprice/{year}/get','TodoController@monthPriceGraph');
+Route::post('/api/graph/statewiseprice','TodoController@statewisePriceGraph')->name('todo.apiMonthGraph');

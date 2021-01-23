@@ -2,10 +2,16 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="custom-control custom-checkbox mr-sm-2">
                 <input type="checkbox" class="custom-control-input" id="displayMonthlySalesGraph" onclick="displayMonthlySales(this);">
                 <label class="custom-control-label" for="displayMonthlySalesGraph">Show Monthly Sales Graph</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="displayStatewiseGraph" onclick="displayStatewiseGraph(this);">
+                <label class="custom-control-label" for="displayStatewiseGraph">Show Statewise Sale</label>
             </div>
         </div>
 
@@ -17,11 +23,37 @@
                     <select name="year_list" id="year_list" onchange="getMonthPrice($(this)); return false;">
                         <option value="">Select</option>
                         <option value="2018">2018</option>
+                        <option value="2019">2019</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
                     </select>
                 </div>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-bottom:15px;">
+            <div class="collapse" id="collapseExample1">
+                <div col-md-4>
+                    {{--Graph Controls--}}
+                    <label for="year_list">Select Year</label>
+                    <select name="year_list" id="state_year_list" onchange="getStatewisePrice(); return false;">
+                        <option value="">Select</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+                    {{--Graph Controls--}}
+                    <label for="month_list">Select Month</label>
+                    <select name="month_list" id="month_list" onchange="getStatewisePrice(); return false;">
+                        <option value="">Select</option>
+                        @foreach($states as $key=>$val)
+                            <option value="{{$key}}">{{$val}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
             </div>
         </div>
     </div>
@@ -88,7 +120,7 @@
                     <h3 class="card-title">Customer Data</h3>
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
-                            {!! $todos->appends($_GET)->links() !!}
+                            {!! $todos->appends($_GET)->onEachSide(2)->links() !!}
                         </ul>
                     </div>
                 </div>
@@ -187,8 +219,26 @@
             }));
         }
 
+        // Get price month year bar graph data from API
+        function getStatewisePrice() {
+            let selected_year = $("#state_year_list option:selected").val() !== '' ? $("#state_year_list option:selected").val() : currYear;
+            let selected_month = $("#month_list option:selected").val();
+            $.ajax({
+                url: "{{ url('/api/graph/statewiseprice') }}",
+                type: "POST",
+                data: {
+                    "year": selected_year,
+                    "month": selected_month,
+                    _token: "{{csrf_token()}}",
+                },
+                success: function(data){
+                    loadStatewisePriceGraph(JSON.parse(data),selected_year)
+                }
+            });
+        }
+
         // Load monthly sales graph
-        function loadMonthPriceGraph(data,selected_year){
+        function loadMonthPriceGraph(data,selected_year) {
             dataset = [];
             $.each(data,function(index,value){
                 dataset.push({x:index,y:value.total_amount,label:value.order_month});
@@ -220,12 +270,54 @@
             console.log(dataset);
         }
 
+        // Load monthly sales graph
+        function loadStatewisePriceGraph(data,selected_year){
+            dataset = [];
+            $.each(data,function(index,value){
+                dataset.push({x:index,y:value.total_amount,label:value.state});
+            });
+            var chart = new CanvasJS.Chart("chartContainer1", {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                title:{
+                    text: `State Wise Sales (${selected_year})`
+                },
+                axisY: {
+                    title: "Amount in Rupees",
+                    titleFontSize:13,
+                    gridColor: "orange",
+                    gridThickness: 0.5,
+                    includeZero: true
+                },
+                data: [{
+                    type: "column", //change type to bar, line, area, pie, etc
+                    indexLabel: "₹{y}", //Shows y value on all Data Points
+                    indexLabelFontColor: "#5A5757",
+                    indexLabelFontSize: 16,
+                    indexLabelPlacement: "outside",
+                    dataPoints: dataset
+                }]
+            });
+            chart.render();
+            console.log(dataset);
+        }
+
         function displayMonthlySales(e) {
             if(e.checked) {
                 $('#collapseExample').collapse('show');
                 $('#year_list').val(currYear).trigger('change');
             } else {
                 $('#collapseExample').collapse('hide');
+            }
+        }
+
+        function displayStatewiseGraph(e) {
+            if(e.checked) {
+                $('#collapseExample1').collapse('show');
+                $('#year_list').val(currYear).trigger('change');
+            } else {
+                $('#collapseExample1').collapse('hide');
             }
         }
 
