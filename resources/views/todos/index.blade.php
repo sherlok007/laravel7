@@ -3,15 +3,15 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <div class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input" id="displayMonthlySalesGraph" onclick="displayMonthlySales(this);">
-                <label class="custom-control-label" for="displayMonthlySalesGraph">Show Monthly Sales Graph</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="displaySalesGraph" id="displayMonthlySalesGraph" value="option1">
+                <label class="form-check-label" for="displayMonthlySalesGraph">Show Monthly Sales Graph</label>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input" id="displayStatewiseGraph" onclick="displayStatewiseGraph(this);">
-                <label class="custom-control-label" for="displayStatewiseGraph">Show Statewise Sale</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="displaySalesGraph" id="displayStatewiseGraph" value="option2">
+                <label class="form-check-label" for="displayStatewiseGraph">Show Statewise Sale</label>
             </div>
         </div>
 
@@ -175,12 +175,28 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script>
         var url = window.location.pathname;
-        const currYear = (new Date().getFullYear());
+        const currYear = (new Date().getFullYear()).toString();
+        const currMonth = getMonthName(new Date().getMonth());
 
-        $(document).ready(function() {
-            //$('#year_list').val(currYear).trigger('change');
-        });
+        // Convert 0-11 in month name
+        function getMonthName(data) {
+            switch (data) {
+                case 0: return 'January'; break;
+                case 1: return 'Feburary'; break;
+                case 2: return 'March'; break;
+                case 3: return 'April'; break;
+                case 4: return 'May'; break;
+                case 5: return 'June'; break;
+                case 6: return 'July'; break;
+                case 7: return 'August'; break;
+                case 8: return 'September'; break;
+                case 9: return 'October'; break;
+                case 10: return 'November'; break;
+                case 11: return 'December'; break;
+            }
+        }
 
+        // Check if refund has been applied and accordingly check the checkbox
         if (url.indexOf("edit") > -1) {
             if ($('#refund_applied').is(":checked") == true) {
                 $('#refund_reason').prop("readonly", false);
@@ -232,7 +248,7 @@
                     _token: "{{csrf_token()}}",
                 },
                 success: function(data){
-                    loadStatewisePriceGraph(JSON.parse(data),selected_year)
+                    loadStatewisePriceGraph(JSON.parse(data),selected_year, selected_month);
                 }
             });
         }
@@ -267,11 +283,10 @@
                 }]
             });
             chart.render();
-            console.log(dataset);
         }
 
-        // Load monthly sales graph
-        function loadStatewisePriceGraph(data,selected_year){
+        // Load state wise sales graph
+        function loadStatewisePriceGraph(data,selected_year,selected_month){
             dataset = [];
             $.each(data,function(index,value){
                 dataset.push({x:index,y:value.total_amount,label:value.state});
@@ -281,7 +296,7 @@
                 exportEnabled: true,
                 theme: "light1", // "light1", "light2", "dark1", "dark2"
                 title:{
-                    text: `State Wise Sales (${selected_year})`
+                    text: `State Wise Sales (${selected_year} - ${selected_month})`
                 },
                 axisY: {
                     title: "Amount in Rupees",
@@ -300,26 +315,26 @@
                 }]
             });
             chart.render();
-            console.log(dataset);
         }
 
-        function displayMonthlySales(e) {
-            if(e.checked) {
+        // Function to display graph on the basis of radio button select
+        $('input[name="displaySalesGraph"]').click(function(){
+            var radio = $(this).attr('id');
+            if (radio == 'displayMonthlySalesGraph') {
                 $('#collapseExample').collapse('show');
                 $('#year_list').val(currYear).trigger('change');
             } else {
                 $('#collapseExample').collapse('hide');
             }
-        }
 
-        function displayStatewiseGraph(e) {
-            if(e.checked) {
+            if (radio == 'displayStatewiseGraph') {
                 $('#collapseExample1').collapse('show');
-                $('#year_list').val(currYear).trigger('change');
+                $('#state_year_list').val(currYear).trigger('change');
+                $('#month_list').val(currMonth).trigger('change');
             } else {
                 $('#collapseExample1').collapse('hide');
             }
-        }
+        });
 
     </script>
 @stop

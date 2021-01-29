@@ -77,6 +77,7 @@ class TodoController extends Controller
             'buyer_name'=>ucwords($request->buyer_name),
             'buyer_phone'=>$request->buyer_phone,
             'buyer_address'=>ucwords($request->buyer_address),
+            'product'=>$request->product,
             'buyer_state'=>$request->buyer_state,
             'price'=>$request->price,
             'consign_no'=>$request->consign_no,
