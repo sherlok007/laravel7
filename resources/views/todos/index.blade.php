@@ -182,7 +182,7 @@
         function getMonthName(data) {
             switch (data) {
                 case 0: return 'January'; break;
-                case 1: return 'Feburary'; break;
+                case 1: return 'February'; break;
                 case 2: return 'March'; break;
                 case 3: return 'April'; break;
                 case 4: return 'May'; break;
