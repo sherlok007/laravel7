@@ -41,13 +41,34 @@
 
 
                     <div class="row">
-                        <div class="col-md-8 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="buyer_address">Buyer Address</label>
                             <input type="text" class="form-control" name="buyer_address" id="buyer_address">
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="order_no">Order Number</label>
+                            <input type="text" class="form-control" name="order_no" id="order_no"  value="">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 mb-3">
+                            <label for="product">Item Name</label>
+                            <input type="text" class="form-control" name="product" id="product" value="">
+                            <div class="invalid-feedback">
+                                Please enter a the item name
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="buyer_state">State</label>
                             <select class="form-control" name="buyer_state" id="buyer_state">
@@ -58,15 +79,6 @@
                             </select>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="order_no">Order Number</label>
-                            <input type="text" class="form-control" name="order_no" id="order_no"  value="">
-                            <div class="invalid-feedback">
-                                Please enter a valid email address for shipping updates.
                             </div>
                         </div>
 
@@ -83,6 +95,7 @@
                             <input type="date" class="form-control" id="order_date" name="order_date">
                         </div>
                     </div>
+
                     <hr class="mb-4">
                     <div class="row">
                         <div class="col-md-4 mb-3">
