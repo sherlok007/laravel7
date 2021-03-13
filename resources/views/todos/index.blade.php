@@ -229,7 +229,7 @@
         // Get price month year bar graph data from API
         function getMonthPrice(e){
             let selected_year = e.find(":selected").text();
-            $.get(`http://localhost/myprogs/laravel7/public/api/graph/monthprice/${selected_year}/get`,(function(resp){
+            $.get(`{{ url('/api/graph') }}/monthprice/${selected_year}/get`,(function(resp){
                 // console.log();
                 loadMonthPriceGraph(JSON.parse(resp),selected_year)
             }));
