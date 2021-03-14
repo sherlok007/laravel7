@@ -105,6 +105,8 @@ class TodoController extends Controller
     }
 
     public function search() {
+        $states = array("January"=>"January","February"=>"February","March"=>"March","April"=>"April","May"=>"May","June"=>"June","July"=>"July","August"=>"August","September"=>"September","October"=>"October","November"=>"November","December"=>"December");
+
         if (!empty($_POST['query'])) {
             $query = $_POST['query'];
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
@@ -168,6 +170,7 @@ class TodoController extends Controller
             'searchquery' => !empty($_POST['query']) ? $_POST['query'] : '',
             'searchOption' => !empty($_POST['searchOption']) ? $_POST['searchOption'] : '',
             'start_dt' => !empty($_POST['start_date']) ? $_POST['start_date'] : '',
+            'states' => $states,
             'end_dt' => !empty($_POST['end_date']) ? $_POST['end_date'] : '',
         ]);
     }

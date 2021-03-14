@@ -286,7 +286,7 @@
         }
 
         // Load state wise sales graph
-        function loadStatewisePriceGraph(data,selected_year,selected_month){
+        function loadStatewisePriceGraph(data,selected_year,selected_month) {
             dataset = [];
             $.each(data,function(index,value){
                 dataset.push({x:index,y:value.total_amount,label:value.state});
@@ -329,7 +329,7 @@
 
             if (radio == 'displayStatewiseGraph') {
                 $('#collapseExample1').collapse('show');
-                $('#state_year_list').val(currYear).trigger('change');
+                $('#state_year_list').val(currYear);
                 $('#month_list').val(currMonth).trigger('change');
             } else {
                 $('#collapseExample1').collapse('hide');
