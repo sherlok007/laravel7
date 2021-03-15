@@ -107,57 +107,57 @@ class TodoController extends Controller
     public function search() {
         $states = array("January"=>"January","February"=>"February","March"=>"March","April"=>"April","May"=>"May","June"=>"June","July"=>"July","August"=>"August","September"=>"September","October"=>"October","November"=>"November","December"=>"December");
 
-        if (!empty($_POST['query'])) {
-            $query = $_POST['query'];
+        if (!empty($_GET['query'])) {
+            $query = $_GET['query'];
             $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>', 1)->get();
 
-            switch($_POST['searchOption']) {
+            switch($_GET['searchOption']) {
                 case '2':
-                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
+                    $has_dates = isset($_GET['start_date'], $_GET['end_date']) ? $this->chkDates($_GET['start_date'],  $_GET['end_date']) : '';
                     switch ($has_dates) {
-                        case '3': $todos = DB::table('todos')->where('order_no', trim($query))->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                        case '3': $todos = DB::table('todos')->where('order_no', trim($query))->whereBetween('order_date', [$_GET['start_date'], $_GET['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '2': $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '<=', $_POST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '2': $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '<=', $_GET['end_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '1': $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '>=', $_POST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '1': $todos = DB::table('todos')->where('order_no', trim($query))->whereDate('order_date', '>=', $_GET['start_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
                         default: $todos = DB::table('todos')->where('order_no', trim($query))->orderBy('id', 'DESC')->paginate(10);
                     }
                     break;
                 case '3':
-                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
+                    $has_dates = isset($_GET['start_date'], $_GET['end_date']) ? $this->chkDates($_GET['start_date'],  $_GET['end_date']) : '';
                     switch ($has_dates) {
-                        case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                        case '3': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereBetween('order_date', [$_GET['start_date'], $_GET['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '2': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '<=', $_POST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '2': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '<=', $_GET['end_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '1': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '>=', $_POST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '1': $todos = DB::table('todos')->where('buyer_phone', trim($query))->whereDate('order_date', '>=', $_GET['start_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
                         default: $todos = DB::table('todos')->where('buyer_phone', trim($query))->orderBy('id', 'DESC')->paginate(10);
                     }
                     break;
                 default:
                     //$todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orWhere('order_no', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
-                    $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
+                    $has_dates = isset($_GET['start_date'], $_GET['end_date']) ? $this->chkDates($_GET['start_date'],  $_GET['end_date']) : '';
                     switch ($has_dates) {
-                        case '3': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                        case '3': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereBetween('order_date', [$_GET['start_date'], $_GET['end_date']])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '2': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '<=', $_POST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '2': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '<=', $_GET['end_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
-                        case '1': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '>=', $_POST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                        case '1': $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->whereDate('order_date', '>=', $_GET['start_date'])->orderBy('id', 'DESC')->paginate(10);
                             break;
                         default: $todos = DB::table('todos')->where('buyer_name', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(10);
                     }
                     break;
             }
         } else {
-            $has_dates = isset($_POST['start_date'], $_POST['end_date']) ? $this->chkDates($_POST['start_date'],  $_POST['end_date']) : '';
+            $has_dates = isset($_GET['start_date'], $_GET['end_date']) ? $this->chkDates($_GET['start_date'],  $_GET['end_date']) : '';
             switch ($has_dates) {
-                case '3': $todos = DB::table('todos')->whereBetween('order_date', [$_POST['start_date'], $_POST['end_date']])->orderBy('id', 'DESC')->paginate(10);
+                case '3': $todos = DB::table('todos')->whereBetween('order_date', [$_GET['start_date'], $_GET['end_date']])->orderBy('id', 'DESC')->paginate(10);
                     break;
-                case '2': $todos = DB::table('todos')->whereDate('order_date', '<=', $_POST['end_date'])->orderBy('id', 'DESC')->paginate(10);
+                case '2': $todos = DB::table('todos')->whereDate('order_date', '<=', $_GET['end_date'])->orderBy('id', 'DESC')->paginate(10);
                     break;
-                case '1': $todos = DB::table('todos')->whereDate('order_date', '>=', $_POST['start_date'])->orderBy('id', 'DESC')->paginate(10);
+                case '1': $todos = DB::table('todos')->whereDate('order_date', '>=', $_GET['start_date'])->orderBy('id', 'DESC')->paginate(10);
                     break;
                 default: $todos = Todo::paginate(10);
             }
@@ -167,11 +167,11 @@ class TodoController extends Controller
         return view('todos.index')->with([
             'todos' => $todos,
             'repeatCustomer' => $repeatCustomer,
-            'searchquery' => !empty($_POST['query']) ? $_POST['query'] : '',
-            'searchOption' => !empty($_POST['searchOption']) ? $_POST['searchOption'] : '',
-            'start_dt' => !empty($_POST['start_date']) ? $_POST['start_date'] : '',
+            'searchquery' => !empty($_GET['query']) ? $_GET['query'] : '',
+            'searchOption' => !empty($_GET['searchOption']) ? $_GET['searchOption'] : '',
+            'start_dt' => !empty($_GET['start_date']) ? $_GET['start_date'] : '',
             'states' => $states,
-            'end_dt' => !empty($_POST['end_date']) ? $_POST['end_date'] : '',
+            'end_dt' => !empty($_GET['end_date']) ? $_GET['end_date'] : '',
         ]);
     }
 

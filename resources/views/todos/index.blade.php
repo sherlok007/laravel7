@@ -71,8 +71,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-inline">
                                 <label class="form-check-label" style="margin-right: 5px;">Search By</label>
-                                <form id="customerIndex" class="form-inline my-2 my-lg-0" method="POST" action="{{ route('todo.search') }}">
-                                    {{ csrf_field() }}
+                                <form id="customerIndex" class="form-inline my-2 my-lg-0" method="GET" action="{{ route('todo.search') }}">
                                     <select class="form-control" name="searchOption" id="searchOption">
                                         <option value="1" @if(!empty($searchOption)) {{ $searchOption == "1" ? "selected" : "" }} @endif>Name</option>
                                         <option value="2" @if(!empty($searchOption)) {{ $searchOption == "2" ? "selected" : "" }} @endif>Order No</option>

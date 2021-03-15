@@ -27,8 +27,7 @@ Route::get('/todos/{id}/view', 'TodoController@view')->name('todo.view');
 Route::patch('/todos/{id}/update', 'TodoController@update')->name('todo.update');
 Route::delete('/todos/{id}/delete', 'TodoController@delete')->name('todo.delete');
 
-//Route::get('/todos/search', 'TodoController@search')->name('todo.search');
-Route::post('/todos/search', 'TodoController@search')->name('todo.search');
+Route::get('/todos/search', 'TodoController@search')->name('todo.search');
 
 Route::post('/upload', 'UserController@uploadAvatar');
 
