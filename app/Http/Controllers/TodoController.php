@@ -48,7 +48,8 @@ class TodoController extends Controller
 
     public function view($id) {
         $todo = Todo::find($id);
-        return view('todos.view', compact('todo'));
+        $allItems = explode(',', $todo->product);
+        return view('todos.view', compact('todo', 'allItems'));
     }
 
     public function edit($id) {
