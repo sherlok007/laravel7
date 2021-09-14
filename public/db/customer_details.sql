@@ -1,6 +1,6 @@
 /*
 SQLyog Enterprise v12.09 (64 bit)
-MySQL - 8.0.23 : Database - customer_details
+MySQL - 8.0.18 : Database - customer_details
 *********************************************************************
 */
 
@@ -15,7 +15,7 @@ MySQL - 8.0.23 : Database - customer_details
 /*Table structure for table `failed_jobs` */
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE `failed_jobs` (
 /*Table structure for table `migrations` */
 
 CREATE TABLE `migrations` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL,
+  `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -51,8 +51,8 @@ insert  into `migrations`(`id`,`migration`,`batch`) values (11,'2016_06_01_00000
 
 CREATE TABLE `oauth_access_tokens` (
   `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint unsigned DEFAULT NULL,
-  `client_id` bigint unsigned NOT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `client_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
@@ -76,8 +76,8 @@ insert  into `oauth_access_tokens`(`id`,`user_id`,`client_id`,`name`,`scopes`,`r
 
 CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint unsigned NOT NULL,
-  `client_id` bigint unsigned NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `client_id` bigint(20) unsigned NOT NULL,
   `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL,
@@ -90,8 +90,8 @@ CREATE TABLE `oauth_auth_codes` (
 /*Table structure for table `oauth_clients` */
 
 CREATE TABLE `oauth_clients` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint unsigned DEFAULT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `provider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -113,8 +113,8 @@ insert  into `oauth_clients`(`id`,`user_id`,`name`,`secret`,`provider`,`redirect
 /*Table structure for table `oauth_personal_access_clients` */
 
 CREATE TABLE `oauth_personal_access_clients` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` bigint unsigned NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -151,7 +151,7 @@ CREATE TABLE `password_resets` (
 /*Table structure for table `states` */
 
 CREATE TABLE `states` (
-  `id` int DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
   `code` char(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `value` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -200,7 +200,7 @@ insert  into `states`(`id`,`code`,`value`) values (38,'10','Bihar');
 /*Table structure for table `todos` */
 
 CREATE TABLE `todos` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `buyer_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `buyer_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -209,14 +209,14 @@ CREATE TABLE `todos` (
   `price` float DEFAULT NULL,
   `consign_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `order_date` date DEFAULT NULL,
-  `refund_applied` tinyint DEFAULT NULL,
+  `refund_applied` tinyint(4) DEFAULT NULL,
   `refund_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `product_sku` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `product` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `todos` */
 
@@ -384,12 +384,15 @@ insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,
 insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (163,'171-6038446-4057904','Amitabh N Singh','9922950224','Flat Number 3072,Building C ,Vanashree Co Operative Housing Next To NRI Complex Seawoods. ,Nerul Navi Mumbai, MAHARASHTRA 400706','27',1495,'EJ127398544IN','2021-03-26',0,NULL,NULL,'Buy Ma Kali Papier Mache (13.5 x 16.5 inches)','2021-03-27 08:10:31','2021-04-02 15:12:49');
 insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (164,'404-5594227-0437148','Milone Mukherjee','9331031842','CF - 323, Salt Lake City, Ground Floor, Kolkata, BIDHAN NAGAR, WEST BENGAL 700064','19',1080,'EJ121939621IN','2021-05-04',0,NULL,NULL,'Pair of Ma Durga & Ma Kali Papier Mache Mask (9 x 3 x 9.5 inches)','2021-05-05 07:13:40','2021-06-16 14:07:46');
 insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (165,'402-1848466-9721904','VK Raju','9000779420','P 366/3 Vinay Rao Enclave JABALPUR, MADHYA PRADESH 482001','23',530,'EJ491531191IN','2021-06-15',0,NULL,NULL,'Wooden Warli Painting 4 Hook Key Holders Wall Hanging (L5 × H7.3 inches)','2021-06-16 14:07:15','2021-06-19 14:38:41');
-insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (166,'402-4270353-5693964','Manish Bardia','9824025486','Moving pixels.co. \'m\' SQUARE, FIRST FLOOR, C BLOCK, MILLENNIUM PLAZA, NEAR MANSHI CROSS ROAD, AHMEDABAD, GUJARAT 380015','24',6131,NULL,'2021-06-19',NULL,NULL,NULL,'Buy Ravana Papier Mache Mask (14 x 9 inches), Set of 2 Hanging Papier Mache Santhal Couple (6 x 4.5 x 6 inches), Trendy Shoppe Demon Papier Mache Mask (7.5 x 3.5 x 7.5 inches), Taraka Chhau Mask - Demon Male Red Face (11 x 13.5 inches), Mahishasur - Chhau Mask Papier Mache (10 x 3 x 10.5 inches)','2021-06-19 14:36:20','2021-06-19 14:36:20');
+insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (166,'402-4270353-5693964','Manish Bardia','9824025486','Moving Pixels.co. \'m\' SQUARE, FIRST FLOOR, C BLOCK, MILLENNIUM PLAZA, NEAR MANSHI CROSS ROAD, AHMEDABAD, GUJARAT 380015','24',6131,'EJ111690834IN','2021-06-19',0,NULL,NULL,'Buy Ravana Papier Mache Mask (14 x 9 inches), Set of 2 Hanging Papier Mache Santhal Couple (6 x 4.5 x 6 inches), Trendy Shoppe Demon Papier Mache Mask (7.5 x 3.5 x 7.5 inches), Taraka Chhau Mask - Demon Male Red Face (11 x 13.5 inches), Mahishasur - Chhau Mask Papier Mache (10 x 3 x 10.5 inches)','2021-06-19 14:36:20','2021-06-30 06:12:33');
+insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (167,'407-6284966-1482751','M Sandeep Shaw','9160423644','Door No:10-5-79, Arundalpet,narasaraopet Narasaraopet NARASARAOPET, ANDHRA PRADESH 522601','37',290,'EJ491535732IN','2021-06-28',0,NULL,NULL,'Set of Two Colourful Sticker Rangoli Print on Glazed Paper','2021-06-30 05:57:50','2021-08-29 16:59:45');
+insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (168,'404-4507486-1739559','Rounik Saha','6290460905','73 DR GS BOSE ROAD, 3rdfloor Saheb Bagan Das Para KOLKATA, WEST BENGAL 700039','19',374,'EJ493690346IN','2021-08-29',0,NULL,NULL,'Wall Hanging of Kavi Guru Rabindranath Tagore and his Poetry (L 10.75 x H 31 inches)','2021-08-29 16:58:29','2021-09-09 14:21:57');
+insert  into `todos`(`id`,`order_no`,`buyer_name`,`buyer_phone`,`buyer_address`,`buyer_state`,`price`,`consign_no`,`order_date`,`refund_applied`,`refund_reason`,`product_sku`,`product`,`created_at`,`updated_at`) values (169,'405-8375879-3533115','Sriradha Haldar','9830075386','Flat 1A Tarulata Apts 78 Ballygunge Place KOLKATAk, WEST BENGAL 700019','19',740,'EJ490172197IN','2021-09-09',0,NULL,NULL,'Chhau Mask Kathakali Papier Mache Green Large Wall Hanging (H 13 X L 10 x W 3) inches','2021-09-09 14:21:31','2021-09-14 07:19:20');
 
 /*Table structure for table `users` */
 
 CREATE TABLE `users` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
