@@ -119,4 +119,27 @@
             </div>
         </div>
     </form>
+
+    <script>
+        var url = window.location.pathname;
+
+        // Check if refund has been applied and accordingly check the checkbox
+        if (url.indexOf("edit") > -1) {
+            if ($('#refund_applied').is(":checked") == true) {
+                $('#refund_reason').prop("readonly", false);
+            } else {
+                $('#refund_reason').prop("readonly", true);
+            }
+        }
+
+        $('#refund_applied').change(function() {
+            if(this.checked) {
+                $('#refund_reason').prop("readonly", false);
+            } else {
+                $('#refund_reason').prop("readonly", true);
+            }
+        })
+
+
+    </script>
 @endsection
