@@ -26,6 +26,7 @@
                         <option value="2019">2019</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
+                        <option value="2022">2022</option>
                     </select>
                 </div>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
@@ -43,6 +44,7 @@
                         <option value="2019">2019</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
+                        <option value="2022">2022</option>
                     </select>
                     {{--Graph Controls--}}
                     <label for="month_list">Select Month</label>
