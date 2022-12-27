@@ -22,10 +22,9 @@
                     <label for="year_list">Select Year</label>
                     <select name="year_list" id="year_list" onchange="getMonthPrice($(this)); return false;">
                         <option value="">Select</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
+                        @foreach($year as $key=>$val)
+                            <option value="{{$key}}">{{$val}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
@@ -39,10 +38,9 @@
                     <label for="year_list">Select Year</label>
                     <select name="year_list" id="state_year_list" onchange="getStatewisePrice(); return false;">
                         <option value="">Select</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
+                        @foreach($year as $key=>$val)
+                            <option value="{{$key}}">{{$val}}</option>
+                        @endforeach
                     </select>
                     {{--Graph Controls--}}
                     <label for="month_list">Select Month</label>
