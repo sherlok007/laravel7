@@ -26,6 +26,7 @@ class TodoController extends Controller
         $repeatCustomer = DB::table('todos')->select('buyer_name', 'buyer_phone')->groupBy('buyer_name', 'buyer_phone')->having(DB::raw('count(*)'), '>=', 2)->get();
 
         $states = array("January"=>"January","February"=>"February","March"=>"March","April"=>"April","May"=>"May","June"=>"June","July"=>"July","August"=>"August","September"=>"September","October"=>"October","November"=>"November","December"=>"December");
+        $years = array("2018","2019","2020","2021","2022","2023");
 
         if (Str::startsWith(request()->path(), 'api')) {
             return compact('todos', 'repeatCustomer');
@@ -34,7 +35,8 @@ class TodoController extends Controller
             return view('todos.index')->with([
                 'todos' => $todos,
                 'repeatCustomer' => $repeatCustomer,
-                'states' => $states
+                'states' => $states,
+                'years' => $years
             ]);
         }
     }
@@ -207,8 +209,6 @@ class TodoController extends Controller
         }
     }
     public function statewisePriceGraph(Request $request){
-
-
         $selected_year = !empty($request['year']) ? $request['year'] : '';
         $selected_month = !empty($request['month']) ? $request['month'] : '';
 
