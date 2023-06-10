@@ -36,9 +36,10 @@
                     {{--Graph Controls--}}
                     <label for="year_list">Select Year</label>
                     <select name="year_list" id="state_year_list" onchange="getStatewisePrice(); return false;">
-                    @foreach($years as $val)
-                        <option value="{{$val}}">{{$val}}</option>
-                    @endforeach
+                        <option value="">Select</option>
+                        @foreach($years as $val)
+                            <option value="{{$val}}">{{$val}}</option>
+                        @endforeach
                     </select>
                     {{--Graph Controls--}}
                     <label for="month_list">Select Month</label>
