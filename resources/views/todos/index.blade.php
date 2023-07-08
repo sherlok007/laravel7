@@ -128,8 +128,8 @@
                         <th>Order No.</th>
                         <th>Buyer Name</th>
                         <th style="text-align:right;">Price ( <i class="fa fa-rupee-sign"></i> )</th>
-                        <th>Tracking No.</th>
                         <th>Order Dt.</th>
+                        <th>Dispatch Dt.</th>                        
                         <th>Status</th>
                         <th>Action</th>
                         </thead>
@@ -144,9 +144,9 @@
                                     @endif
                                 @endforeach
                                 </td>
-                                <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>
-                                <td>{{ $todo->consign_no }}</td>
+                                <td style="text-align:right;"> @if (!empty($todo->refund_applied)) <span style="color: red;">-{{ number_format($todo->price, 2) }}</span> @else <span style="color: forestgreen;">{{ number_format($todo->price, 2) }}</span> @endif</td>                                
                                 <td>{{ date("d/m/Y", strtotime($todo->order_date)) }}</td>
+                                <td>{{ date("d/m/Y", strtotime($todo->dispatch_date)) }}</td>
                                 <td>@if (!empty($todo->refund_applied)) <span style="color: red; font-size: 0.8em; font-weight: bold">Returned</span> @else <span style="color: forestgreen; font-size: 0.8em; font-weight: bold">Accepted</span> @endif</td>
                                 <td><a href="{{ route('todo.view', $todo->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a> | <a href="{{ route('todo.edit', $todo->id) }}"><i class="fa fa-edit" aria-hidden="true"></i></a> | <i class="fa fa-trash cursor-pointer" style="color: orangered;" aria-hidden="true" onclick="if (confirm('Are you really want to delete?')) { document.getElementById('form-delete-{{ $todo->id }}').submit() }"></i></td>
 

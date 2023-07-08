@@ -3,9 +3,10 @@
 @section('content')
     <h1 class="text-2x1">Edit this To-Do</h1>
     <x-alert />
-    <form method="post" action="{{ route('todo.update', $todo->id) }}">
+    <form method="post" action="{{ route('todo.update', $todo->id) }}">        
         @csrf
         @method('patch')
+        <input type="hidden" name="redirects_to" value="{{ URL::previous() }}" />
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
             <h2>Update Order Details</h2>
@@ -70,7 +71,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="buyer_state">State</label>
                             <select class="form-control" name="buyer_state" id="buyer_state">
                                 <option>---Select State---</option>
@@ -86,7 +87,7 @@
                                 Please enter your shipping address.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="consign_no">Consignment Number</label>
                             <input type="text" class="form-control" name="consign_no" id="consign_no" value="{{ $todo->consign_no }}">
                             <div class="invalid-feedback">
@@ -94,9 +95,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="order_date">Order Date</label>
                             <input type="date" class="form-control" id="order_date" name="order_date" value="{{ $todo->order_date }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="dispatch_date">Dispatch Date</label>
+                            <input type="date" class="form-control" id="dispatch_date" name="dispatch_date" value="{{ $todo->dispatch_date }}">
                         </div>
                     </div>
                     <hr class="mb-4">

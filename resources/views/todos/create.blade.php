@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="buyer_state">State</label>
                             <select class="form-control" name="buyer_state" id="buyer_state">
                                 <option>---Select State---</option>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="consign_no">Consignment Number</label>
                             <input type="consign_no" class="form-control" name="consign_no" id="consign_no">
                             <div class="invalid-feedback">
@@ -90,9 +90,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="order_date">Order Date</label>
                             <input type="date" class="form-control" id="order_date" name="order_date">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="dispatch_date">Dispatch Date</label>
+                            <input type="date" class="form-control" id="dispatch_date" name="dispatch_date">
                         </div>
                     </div>
 

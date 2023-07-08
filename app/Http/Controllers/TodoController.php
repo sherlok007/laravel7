@@ -70,7 +70,7 @@ class TodoController extends Controller
         $input['buyer_address'] = ucfirst($request['buyer_address']);
         Todo::create($input);
         //return redirect()->back()->with('success', 'Todo created successfully');
-        return redirect(route('todo.index'))->with('success', 'Updated successfully');
+        return redirect(route('todo.index'))->with('success', 'Created successfully');
     }
 
     // Below function is known as route model binding
@@ -85,10 +85,13 @@ class TodoController extends Controller
             'price'=>$request->price,
             'consign_no'=>$request->consign_no,
             'order_date'=>$request->order_date,
+            'dispatch_date'=>$request->dispatch_date,
             'refund_applied'=> isset($request->refund_applied) ? 1 : 0,
             'refund_reason'=> $request->refund_reason,
         ]);
-        return redirect(route('todo.index'))->with('success', 'Updated successfully');
+        // return redirect(route('todo.index'))->with('success', 'Updated successfully');
+        $url = $request->only('redirects_to');       
+        return redirect()->to($url['redirects_to'])->with('success', 'Updated successfully');
     }
 
     public function delete($id) {
